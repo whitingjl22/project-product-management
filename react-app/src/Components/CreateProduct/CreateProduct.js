@@ -1,4 +1,5 @@
 import React from "react"
+import { Redirect } from "react-router-dom"
 
 class CreateProduct extends React.Component {
   constructor(props) {
@@ -6,7 +7,8 @@ class CreateProduct extends React.Component {
     this.state = {
       title: "",
       price: 0,
-      image: ""
+      image: "",
+      toProductList: false
     }
   }
 
@@ -23,13 +25,17 @@ class CreateProduct extends React.Component {
     this.setState({
       title: "",
       price: 0,
-      image: ""
+      image: "",
+      toProductList: true
     })
   }
 
   render() {
     console.log("Create Product State:", this.state)
     console.log("Create Product Props:", this.props)
+    if (this.state.toProductList === true) {
+      return <Redirect to="/products" />
+    }
     return (
       <div>
         <h1>Create Product</h1>

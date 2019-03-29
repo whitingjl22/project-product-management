@@ -14,6 +14,7 @@ class Container extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      nextid: 3,
       products: [
         {
           id: 1,
@@ -31,6 +32,29 @@ class Container extends React.Component {
       ]
     }
   }
+
+  addNewProduct = (product) => {
+    console.log("addNewProduct passing:", product)
+
+    this.setState(
+      {
+        products: [
+          ...this.state.products,
+          {
+            id: this.state.nextid + 1,
+            title: product.title,
+            price: product.price,
+            image: product.image
+          }
+        ]
+      },
+      () => {
+        // this.props.history.push("/products") // test
+        return <Redirect to="/products" />
+      }
+    )
+  }
+
   render() {
     console.log("Container Page State:", this.state)
     console.log("Products", this.state.products)
@@ -44,7 +68,9 @@ class Container extends React.Component {
               <Route exact path="/" render={() => <Redirect to="/home" />} />
               <Route path="/home" component={Home} />
               <Route path="/products/edit/:id" render={(props) => <EditProduct {...props} />} />
-              <Route path="/products/new" component={CreateProduct} />
+
+              <Route path="/products/new" render={() => <CreateProduct addNewProductFunc={this.addNewProduct} />} />
+
               <Route path="/products" render={() => <ProductList products={this.state.products} />} />
             </Switch>
           </div>

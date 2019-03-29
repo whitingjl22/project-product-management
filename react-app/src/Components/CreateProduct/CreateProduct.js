@@ -21,6 +21,8 @@ class CreateProduct extends React.Component {
     e.preventDefault()
     console.log(`Create Button Clicked`)
 
+    // this.props.addNewProductFunc(this.state) // test
+
     console.log(`resetting`)
     this.setState({
       title: "",
@@ -28,6 +30,8 @@ class CreateProduct extends React.Component {
       image: "",
       toProductList: true
     })
+    // this.props.history.push("/products") // test
+    this.props.addNewProductFunc(this.state) // test
   }
 
   render() {

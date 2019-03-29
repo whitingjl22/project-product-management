@@ -1,5 +1,6 @@
 import React from "react"
 import "./ProductList.css"
+import { Link } from "react-router-dom"
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -22,7 +23,9 @@ class ProductList extends React.Component {
                   <br />${product.price}
                   <br />
                   <br />
-                  <button>Edit</button>
+                  <Link to={"/products/edit/" + product.id}>
+                    <button>Edit</button>
+                  </Link>
                   <br />
                   <button>Delete</button>
                 </li>

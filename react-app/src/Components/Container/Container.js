@@ -7,6 +7,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
 
 import Home from "./../Home/Home"
 import ProductList from "./../ProductList/ProductList"
+import EditProduct from "./../EditProduct/EditProduct"
+import CreateProduct from "./../CreateProduct/CreateProduct"
 
 class Container extends React.Component {
   constructor(props) {
@@ -41,6 +43,8 @@ class Container extends React.Component {
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/home" />} />
               <Route path="/home" component={Home} />
+              <Route path="/products/edit/:id" render={(props) => <EditProduct {...props} />} />
+              <Route path="/products/new" component={CreateProduct} />
               <Route path="/products" render={() => <ProductList products={this.state.products} />} />
             </Switch>
           </div>

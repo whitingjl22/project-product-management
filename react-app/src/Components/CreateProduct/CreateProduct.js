@@ -5,8 +5,8 @@ class CreateProduct extends React.Component {
     super(props)
     this.state = {
       title: "",
-      Price: 0,
-      Image: ""
+      price: 0,
+      image: ""
     }
   }
 
@@ -29,30 +29,29 @@ class CreateProduct extends React.Component {
 
   render() {
     console.log("Create Product State:", this.state)
-    console.log("Create Product Props", this.props)
+    console.log("Create Product Props:", this.props)
     return (
       <div>
         <h1>Create Product</h1>
         <form onSubmit={this.handleSubmit}>
           <table>
-            <thead />
             <tbody>
               <tr>
                 <td>Title</td>
                 <td>
-                  <input type="text" id="title" onChange={this.handleChange} value={this.state.title} />
+                  <input type="text" name="title" id="title" onChange={this.handleChange} value={this.state.title} />
                 </td>
               </tr>
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} />
+                  <input type="number" name="price" id="price" onChange={this.handleChange} value={this.state.price} />
                 </td>
               </tr>
               <tr>
                 <td>Image Url</td>
                 <td>
-                  <input type="text" id="image" onChange={this.handleChange} value={this.state.image} />
+                  <input type="text" name="image" id="image" onChange={this.handleChange} value={this.state.image} />
                 </td>
               </tr>
             </tbody>

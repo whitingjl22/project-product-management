@@ -27,7 +27,7 @@ class ProductList extends React.Component {
                     <button>Edit</button>
                   </Link>
                   <br />
-                  <button>Delete</button>
+                  <button onClick={() => this.props.onRemoveItemFunc(product.id)}>Delete</button>
                 </li>
               )
             })}

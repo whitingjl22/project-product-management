@@ -14,7 +14,7 @@ class Container extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      nextid: 3,
+      nextid: 2,
       products: [
         {
           id: 1,
@@ -34,7 +34,7 @@ class Container extends React.Component {
   }
 
   addNewProduct = (product) => {
-    console.log("addNewProduct passing:", product)
+    console.log("addNewProduct called:", product)
 
     this.setState(
       {
@@ -50,9 +50,19 @@ class Container extends React.Component {
       },
       () => {
         // this.props.history.push("/products") // test
-        return <Redirect to="/products" />
+        // return <Redirect to="/products" /> // keep
       }
     )
+  }
+
+  onRemoveItem = (id) => {
+    this.setState((state) => {
+      const products = state.products.filter((item) => item.id !== id)
+
+      return {
+        products
+      }
+    })
   }
 
   render() {
@@ -71,7 +81,10 @@ class Container extends React.Component {
 
               <Route path="/products/new" render={() => <CreateProduct addNewProductFunc={this.addNewProduct} />} />
 
-              <Route path="/products" render={() => <ProductList products={this.state.products} />} />
+              <Route
+                path="/products"
+                render={() => <ProductList products={this.state.products} onRemoveItemFunc={this.onRemoveItem} />}
+              />
             </Switch>
           </div>
         </BrowserRouter>

@@ -6,15 +6,28 @@ class CreateProduct extends React.Component {
     super(props)
     this.state = {
       title: "",
-      price: 0,
+      price: "",
       image: "",
-      toProductList: false
+      toProductList: false,
+      titleValid: false,
+      priceValid: false
     }
   }
 
   handleChange = (e) => {
     console.log(`changing ${e.target.id}`)
-    this.setState({ [e.target.id]: e.target.value })
+    this.setState({ [e.target.id]: e.target.value }, () => {
+      if (this.state.title.length < 4) {
+        this.setState({ titleValid: false })
+      } else {
+        this.setState({ titleValid: true })
+      }
+      if (this.state.price === "") {
+        this.setState({ priceValid: false })
+      } else {
+        this.setState({ priceValid: true })
+      }
+    })
   }
 
   handleSubmit = (e) => {
@@ -23,15 +36,16 @@ class CreateProduct extends React.Component {
 
     // this.props.addNewProductFunc(this.state) // test
 
+    this.props.addNewProductFunc(this.state) // keep
+
     console.log(`resetting`)
     this.setState({
       title: "",
-      price: 0,
+      price: "",
       image: "",
       toProductList: true
     })
     // this.props.history.push("/products") // test
-    this.props.addNewProductFunc(this.state) // test
   }
 
   render() {
@@ -49,24 +63,24 @@ class CreateProduct extends React.Component {
               <tr>
                 <td>Title</td>
                 <td>
-                  <input type="text" name="title" id="title" onChange={this.handleChange} value={this.state.title} />
+                  <input type="text" id="title" onChange={this.handleChange} value={this.state.title} />
                 </td>
               </tr>
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" name="price" id="price" onChange={this.handleChange} value={this.state.price} />
+                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} />
                 </td>
               </tr>
               <tr>
                 <td>Image Url</td>
                 <td>
-                  <input type="text" name="image" id="image" onChange={this.handleChange} value={this.state.image} />
+                  <input type="text" id="image" onChange={this.handleChange} value={this.state.image} />
                 </td>
               </tr>
             </tbody>
           </table>
-          <input type="submit" value="Create" />
+          <input type="submit" value="Create" disabled={!this.state.titleValid || !this.state.priceValid} />
         </form>
       </div>
     )

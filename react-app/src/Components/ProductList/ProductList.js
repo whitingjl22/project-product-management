@@ -7,6 +7,11 @@ class ProductList extends React.Component {
     super(props)
     this.state = {}
   }
+
+  componentDidMount() {
+    this.props.getProductsFunc()
+  }
+
   render() {
     console.log("Product List Props:", this.props)
     return (

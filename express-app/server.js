@@ -49,12 +49,12 @@ app.delete("/api/products/:id", (request, response) => {
     })
 })
 
-// PATCH Product
-app.patch("/api/products/:id", (request, response) => {
+// PUT Product
+app.put("/api/products/:id", (request, response) => {
   axios
-    .patch(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`)
+    .put(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`, request.body)
     .then((mockApiResponse) => {
-      console.log(`Patch Product ${request.params.id}`)
+      console.log(`PUT Product ${request.params.id}`)
       return response.json({ status: true })
     })
     .catch((error) => {

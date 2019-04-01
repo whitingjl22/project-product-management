@@ -87,7 +87,13 @@ class Container extends React.Component {
 
               <Route
                 path="/products"
-                render={() => <ProductList products={this.state.products} deleteProductFunc={this.deleteProduct} />}
+                render={() => (
+                  <ProductList
+                    products={this.state.products}
+                    deleteProductFunc={this.deleteProduct}
+                    getProductsFunc={this.getProducts}
+                  />
+                )}
               />
             </Switch>
           </div>

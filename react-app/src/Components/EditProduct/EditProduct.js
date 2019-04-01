@@ -41,7 +41,7 @@ class EditProduct extends React.Component {
   updateProduct = () => {
     console.log("update triggered")
     axios
-      .patch(`http://localhost:4000/api/products/${this.props.match.params.id}`, {
+      .put(`http://localhost:4000/api/products/${this.props.match.params.id}`, {
         title: this.state.title,
         price: this.state.price,
         image: this.state.url
@@ -58,6 +58,7 @@ class EditProduct extends React.Component {
 
   handleChange = (e) => {
     console.log(`changing ${e.target.id}`)
+
     this.setState({ [e.target.id]: e.target.value }, () => {
       if (this.state.title.length < 4) {
         this.setState({ titleValid: false })

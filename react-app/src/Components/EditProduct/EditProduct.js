@@ -1,4 +1,6 @@
 import React from "react"
+import { Link } from "react-router-dom"
+import axios from "axios"
 
 class EditProduct extends React.Component {
   constructor(props) {
@@ -11,6 +13,33 @@ class EditProduct extends React.Component {
       titleValid: false,
       priceValid: false
     }
+  }
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:3000/products/edit/" + this.props.match.params.id)
+      .then((response) => {
+        this.setState({
+          title: response.data.title,
+          price: response.data.price,
+          image: response.data.image
+        })
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
+  }
+
+  onSubmit(e) {
+    e.preventDefault()
+    const obj = {
+      title: this.state.title,
+      price: this.state.price,
+      image: this.state.image
+    }
+    axios.post("http://localhost:3000/products/update/" + this.props.match.params.id, obj).then((res) => console.log(res.data))
+
+    this.props.history.push("/index")
   }
 
   handleSubmit = (e) => {
@@ -71,8 +100,12 @@ class EditProduct extends React.Component {
               </tr>
             </tbody>
           </table>
-          <input type="submit" value="Delete" />
-          <input type="submit" value="Update" disabled={!this.state.titleValid || !this.state.priceValid} />
+          <Link to={"/products/"}>
+            <input type="submit" value="Delete" />
+          </Link>
+          <Link to={"/products/"}>
+            <input type="submit" value="Update" disabled={!this.state.titleValid || !this.state.priceValid} />
+          </Link>
         </form>
       </div>
     )

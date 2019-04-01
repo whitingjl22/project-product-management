@@ -32,11 +32,12 @@ class CreateProduct extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(`Create Button Clicked`)
 
-    // this.props.addNewProductFunc(this.state) // test
-
-    this.props.addNewProductFunc(this.state) // keep
+    this.props.addNewProductFunc({
+      title: this.state.title,
+      price: this.state.price,
+      image: this.state.image
+    })
 
     console.log(`resetting`)
     this.setState({
@@ -45,7 +46,6 @@ class CreateProduct extends React.Component {
       image: "",
       toProductList: true
     })
-    // this.props.history.push("/products") // test
   }
 
   render() {

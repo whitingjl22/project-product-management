@@ -3,7 +3,7 @@ import NavBar from "../NavBar/NavBar"
 import "react-router"
 import "./Container.css"
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
-// import axios from "axios"
+import axios from "axios"
 
 import Home from "./../Home/Home"
 import ProductList from "./../ProductList/ProductList"
@@ -14,45 +14,47 @@ class Container extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      nextid: 2,
-      products: [
-        {
-          id: 1,
-          title: "DSLR Camera",
-          price: 1499.99,
-          image: "https://i.ebayimg.com/00/s/ODcyWDEwMjA=/z/Y3AAAOSweW5VE9xh/$_32.JPG"
-        },
-        {
-          id: 2,
-          title: "iLaptop",
-          price: 1299.99,
-          image:
-            "https://as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-space-gray-201706_GEO_US?wid=1200&hei=630&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1539399807811"
-        }
-      ]
+      products: []
     }
   }
 
-  addNewProduct = (product) => {
-    console.log("addNewProduct called:", product)
+  componentDidMount() {
+    this.getProducts()
+  }
 
-    this.setState(
-      {
-        products: [
-          ...this.state.products,
-          {
-            id: this.state.nextid + 1,
-            title: product.title,
-            price: product.price,
-            image: product.image
-          }
-        ]
-      },
-      () => {
-        // this.props.history.push("/products") // test
-        // return <Redirect to="/products" /> // keep
+  getProducts = () => {
+    let products = []
+
+    axios
+      .get("http://localhost:4000/api/products")
+      .then((response) => {
+        products = [...response.data]
+        this.setState({
+          products
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  addNewProduct = (product) => {
+    var tempProduct = {
+      title: product.title,
+      price: product.price,
+      image: product.image
+    }
+    axios.post("http://localhost:4000/api/products", tempProduct).then((response) => {
+      tempProduct = {
+        id: response.data.id,
+        title: product.title,
+        price: product.price,
+        image: product.image
       }
-    )
+      this.setState({
+        products: [...this.state.products, tempProduct]
+      })
+    })
   }
 
   onRemoveItem = (id) => {

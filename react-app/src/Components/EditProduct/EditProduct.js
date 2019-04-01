@@ -1,6 +1,6 @@
 import React from "react"
-import { Link } from "react-router-dom"
 import axios from "axios"
+import { Redirect } from "react-router-dom"
 
 class EditProduct extends React.Component {
   constructor(props) {
@@ -9,50 +9,51 @@ class EditProduct extends React.Component {
       title: "",
       price: "",
       image: "",
-      // toProductList: false,
+      toProductList: false,
       titleValid: false,
       priceValid: false
     }
   }
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:3000/products/edit/" + this.props.match.params.id)
-      .then((response) => {
-        this.setState({
-          title: response.data.title,
-          price: response.data.price,
-          image: response.data.image
-        })
-      })
-      .catch(function(error) {
-        console.log(error)
-      })
+  componentDidMount = () => {
+    axios.get(`http://localhost:4000/api/products/${this.props.match.params.id}`).then((response) => {
+      this.setState({ title: response.data.title, price: response.data.price, image: response.data.image })
+    })
   }
 
   onSubmit(e) {
     e.preventDefault()
-    const obj = {
-      title: this.state.title,
-      price: this.state.price,
-      image: this.state.image
-    }
-    axios.post("http://localhost:3000/products/update/" + this.props.match.params.id, obj).then((res) => console.log(res.data))
-
-    this.props.history.push("/index")
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(`Create Button Clicked`)
+  deleteProduct = () => {
+    axios
+      .delete(`http://localhost:4000/api/products/${this.props.match.params.id}`)
+      .then((response) => {
+        if (response.data.status === true) {
+          this.setState({ toProductList: true })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-    console.log(`resetting`)
-    this.setState({
-      title: "",
-      price: "",
-      image: "",
-      toProductList: true
-    })
+  updateProduct = () => {
+    console.log("update triggered")
+    axios
+      .patch(`http://localhost:4000/api/products/${this.props.match.params.id}`, {
+        title: this.state.title,
+        price: this.state.price,
+        image: this.state.url
+      })
+      .then((response) => {
+        if (response.data.status === true) {
+          this.setState({ toProductList: true })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   handleChange = (e) => {
@@ -72,12 +73,15 @@ class EditProduct extends React.Component {
   }
 
   render() {
+    if (this.state.toProductList) {
+      return <Redirect to="/products" />
+    }
     console.log("Edit Product Props:", this.props)
     console.log("Edit Product State:", this.state)
     return (
       <div>
         <h1>Edit Product</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.onSubmit}>
           <table>
             <tbody>
               <tr>
@@ -89,7 +93,7 @@ class EditProduct extends React.Component {
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} />
+                  <input type="number" id="price" min="0" onChange={this.handleChange} value={this.state.price} />
                 </td>
               </tr>
               <tr>
@@ -100,12 +104,13 @@ class EditProduct extends React.Component {
               </tr>
             </tbody>
           </table>
-          <Link to={"/products/"}>
-            <input type="submit" value="Delete" />
-          </Link>
-          <Link to={"/products/"}>
-            <input type="submit" value="Update" disabled={!this.state.titleValid || !this.state.priceValid} />
-          </Link>
+          <input type="submit" value="Delete" onClick={this.deleteProduct} />
+          <input
+            type="submit"
+            value="Update"
+            disabled={!this.state.titleValid || !this.state.priceValid}
+            onClick={this.updateProduct}
+          />
         </form>
       </div>
     )

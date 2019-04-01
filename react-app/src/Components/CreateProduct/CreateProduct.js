@@ -69,7 +69,7 @@ class CreateProduct extends React.Component {
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} />
+                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} min="0" />
                 </td>
               </tr>
               <tr>

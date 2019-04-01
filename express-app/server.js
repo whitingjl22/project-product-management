@@ -62,6 +62,18 @@ app.put("/api/products/update/:id", (request, response) => {
     })
 })
 
+// GET Individual Product Data
+app.get("/api/products/:id", (request, response) => {
+  axios
+    .get(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`)
+    .then((mockApiResponse) => {
+      return response.json(mockApiResponse.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+})
+
 app.get("*", (request, response) => {
   response.sendFile(path.resolve(__dirname + "./../react-app/build/index.html"))
 })

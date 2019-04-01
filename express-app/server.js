@@ -24,7 +24,7 @@ app.get("/api/products", (request, response) => {
 })
 
 // POST Product
-app.post("/api/products", (request, response) => {
+app.post("/api/products/add", (request, response) => {
   axios
     .post("http://5c992ab94236560014393239.mockapi.io/products", request.body)
     .then((mockApiResponse) => {
@@ -37,7 +37,7 @@ app.post("/api/products", (request, response) => {
 })
 
 // DELETE Product
-app.delete("/api/products/:id", (request, response) => {
+app.delete("/api/products/delete/:id", (request, response) => {
   axios
     .delete(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`)
     .then((mockApiResponse) => {
@@ -50,7 +50,7 @@ app.delete("/api/products/:id", (request, response) => {
 })
 
 // PUT Product
-app.put("/api/products/:id", (request, response) => {
+app.put("/api/products/update/:id", (request, response) => {
   axios
     .put(`http://5c992ab94236560014393239.mockapi.io/products/${request.params.id}`, request.body)
     .then((mockApiResponse) => {

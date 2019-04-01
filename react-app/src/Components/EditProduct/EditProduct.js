@@ -27,7 +27,7 @@ class EditProduct extends React.Component {
 
   deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/api/products/${this.props.match.params.id}`)
+      .delete(`http://localhost:4000/api/products/delete/${this.props.match.params.id}`)
       .then((response) => {
         if (response.data.status === true) {
           this.setState({ toProductList: true })
@@ -39,9 +39,8 @@ class EditProduct extends React.Component {
   }
 
   updateProduct = () => {
-    console.log("update triggered")
     axios
-      .put(`http://localhost:4000/api/products/${this.props.match.params.id}`, {
+      .put(`http://localhost:4000/api/products/update/${this.props.match.params.id}`, {
         title: this.state.title,
         price: this.state.price,
         image: this.state.url

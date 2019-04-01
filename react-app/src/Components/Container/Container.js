@@ -44,7 +44,7 @@ class Container extends React.Component {
       price: product.price,
       image: product.image
     }
-    axios.post("http://localhost:4000/api/products", tempProduct).then((response) => {
+    axios.post("http://localhost:4000/api/products/add", tempProduct).then((response) => {
       tempProduct = {
         id: response.data.id,
         title: product.title,
@@ -59,7 +59,7 @@ class Container extends React.Component {
 
   deleteProduct = (product) => {
     axios
-      .delete(`http://localhost:4000/api/products/${product.id}`)
+      .delete(`http://localhost:4000/api/products/delete/${product.id}`)
       .then((response) => {
         console.log(response)
         this.getProducts()

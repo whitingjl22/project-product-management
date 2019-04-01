@@ -57,14 +57,16 @@ class Container extends React.Component {
     })
   }
 
-  onRemoveItem = (id) => {
-    this.setState((state) => {
-      const products = state.products.filter((item) => item.id !== id)
-
-      return {
-        products
-      }
-    })
+  deleteProduct = (product) => {
+    axios
+      .delete(`http://localhost:4000/api/products/${product.id}`)
+      .then((response) => {
+        console.log(response)
+        this.getProducts()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render() {
@@ -85,7 +87,7 @@ class Container extends React.Component {
 
               <Route
                 path="/products"
-                render={() => <ProductList products={this.state.products} onRemoveItemFunc={this.onRemoveItem} />}
+                render={() => <ProductList products={this.state.products} deleteProductFunc={this.deleteProduct} />}
               />
             </Switch>
           </div>

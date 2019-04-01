@@ -60,7 +60,7 @@ class EditProduct extends React.Component {
     console.log(`changing ${e.target.id}`)
 
     this.setState({ [e.target.id]: e.target.value }, () => {
-      if (this.state.title.length < 4) {
+      if (this.state.title === "" && this.state.title.length < 4) {
         this.setState({ titleValid: false })
       } else {
         this.setState({ titleValid: true })

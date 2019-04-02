@@ -56,9 +56,9 @@ class EditProduct extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(`changing ${e.target.id}`)
+    console.log(`changing ${e.target.name}`)
 
-    this.setState({ [e.target.id]: e.target.value }, () => {
+    this.setState({ [e.target.name]: e.target.value }, () => {
       if (this.state.title === "" && this.state.title.length < 4) {
         this.setState({ titleValid: false })
       } else {
@@ -87,19 +87,19 @@ class EditProduct extends React.Component {
               <tr>
                 <td>Title</td>
                 <td>
-                  <input type="text" id="title" onChange={this.handleChange} value={this.state.title} />
+                  <input type="text" name="title" onChange={this.handleChange} value={this.state.title} />
                 </td>
               </tr>
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" id="price" min="0" onChange={this.handleChange} value={this.state.price} />
+                  <input type="number" name="price" min="0" onChange={this.handleChange} value={this.state.price} />
                 </td>
               </tr>
               <tr>
                 <td>Image Url</td>
                 <td>
-                  <input type="text" id="image" onChange={this.handleChange} value={this.state.image} />
+                  <input type="text" name="image" onChange={this.handleChange} value={this.state.image} />
                 </td>
               </tr>
             </tbody>

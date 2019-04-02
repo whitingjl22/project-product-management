@@ -15,8 +15,8 @@ class CreateProduct extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(`changing ${e.target.id}`)
-    this.setState({ [e.target.id]: e.target.value }, () => {
+    console.log(`changing ${e.target.name}`)
+    this.setState({ [e.target.name]: e.target.value }, () => {
       if (this.state.title.length < 4) {
         this.setState({ titleValid: false })
       } else {
@@ -63,19 +63,19 @@ class CreateProduct extends React.Component {
               <tr>
                 <td>Title</td>
                 <td>
-                  <input type="text" id="title" onChange={this.handleChange} value={this.state.title} />
+                  <input type="text" name="title" onChange={this.handleChange} value={this.state.title} />
                 </td>
               </tr>
               <tr>
                 <td>Price</td>
                 <td>
-                  <input type="number" id="price" onChange={this.handleChange} value={this.state.price} min="0" />
+                  <input type="number" name="price" onChange={this.handleChange} value={this.state.price} min="0" />
                 </td>
               </tr>
               <tr>
                 <td>Image Url</td>
                 <td>
-                  <input type="text" id="image" onChange={this.handleChange} value={this.state.image} />
+                  <input type="text" name="image" onChange={this.handleChange} value={this.state.image} />
                 </td>
               </tr>
             </tbody>
